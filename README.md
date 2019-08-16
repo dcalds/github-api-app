@@ -10,4 +10,6 @@
 
 2. Use Hooks Apenas Dentro de Funções do React
 
+---
+
 <img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/Screenshots.jpg" alt="Image" width="900">
