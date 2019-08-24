@@ -1,54 +1,54 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import {
-  View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Animated, Keyboard  
+  View, Text, Button, TextInput, StyleSheet, TouchableOpacity, Image, Animated, Keyboard
 } from 'react-native';
 
-export default function Main() {
-  
+export default function Main({ navigation }) {
+
   const [username, setUsername] = useState(null)
   const [userData, setUserData] = useState(null)
   const [loading, setLoading] = useState(false) // false = inicio // true = mostra user ou erro
   const [validation, setValidation] = useState("Pesquise usuários do GitHub")
   const [validationColor, setValidationColor] = useState("black")
-    
+
   // [START ANIMATION]
-  const Box = ({ scale = 1 }) => (
+  // const Box = ({ scale = 1 }) => (
 
-    <Animated.Image
-      source={require('../../assets/cat.jpg')}
-      style={[
-        {
-          width: 150,
-          height: 150,
-          backgroundColor: 'black',
-          borderRadius: 150,
-          marginBottom: 15,
-          transform: [{ scale }],
-        },
-      ]}
-    />
-  );
+  //   <Animated.Image
+  //     source={require('../../assets/cat.jpg')}
+  //     style={[
+  //       {
+  //         width: 150,
+  //         height: 150,
+  //         backgroundColor: 'black',
+  //         borderRadius: 150,
+  //         marginBottom: 15,
+  //         transform: [{ scale }],
+  //       },
+  //     ]}
+  //   />
+  // );
 
-  const usePulse = (startDelay = 500) => {
-    const scale = useRef(new Animated.Value(1)).current;
+  // const usePulse = (startDelay = 500) => {
+  //   const scale = useRef(new Animated.Value(1)).current;
 
-    const pulse = () => {
-      Animated.sequence([
-        Animated.timing(scale, { toValue: 1.02 }),
-        Animated.timing(scale, { toValue: 0.98 }),
-      ]).start(() => pulse());
-    };
+  //   const pulse = () => {
+  //     Animated.sequence([
+  //       Animated.timing(scale, { toValue: 1.02 }),
+  //       Animated.timing(scale, { toValue: 0.98 }),
+  //     ]).start(() => pulse());
+  //   };
 
-    useEffect(() => {
-      const timeout = setTimeout(() => pulse(), startDelay);
-      return () => clearTimeout(timeout);
-    }, []);
+  //   useEffect(() => {
+  //     const timeout = setTimeout(() => pulse(), startDelay);
+  //     return () => clearTimeout(timeout);
+  //   }, []);
 
-    return scale;
-  };
+  //   return scale;
+  // };
 
-  const scale = usePulse();
+  // const scale = usePulse();
   // [END ANIMATION]
 
   // async function loadRandomUser() {
@@ -106,108 +106,126 @@ export default function Main() {
   }
 
   return (
-    <View style={styles.container}>
 
-      {
+    <>
 
-        // CASO O O CARREGAMENTO SEJA TROCADO PARA FALSO, IRÁ RENDERIZAR A TELA DE USUÁRIO
-        (loading === false)
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <Image
+          style={{ width: 35, height: 35, marginTop: 5, marginLeft: 5 }}
+          source={require('../../assets/gear.png')}
+        />
+      </TouchableOpacity>
 
-          ?
+      <View style={styles.container}>
 
-          // [START OPÇÃO 1]
-          <>
-            <Box scale={scale} />
+        {
 
-            <Text style={{
-              color: validation,
-              fontSize: 16,
-              color: validationColor
-            }}> {validation} </Text>
+          // CASO O O CARREGAMENTO SEJA TROCADO PARA FALSO, IRÁ RENDERIZAR A TELA DE USUÁRIO
+          (loading === false)
 
-            <View style={styles.viewInput}>
-              <TextInput
-                style={styles.txtInput}
-                onChangeText={searchUsername}
-                placeholder="Digite aqui"
-                clearButtonMode='always'
-              />
-            </View>
+            ?
 
-            <TouchableOpacity style={styles.btn} onPress={verifyEmpity}>
-              <Text style={styles.txt}>Buscar</Text>
-            </TouchableOpacity>
+            // [START BUSCA INICIAL]
+            <>
+              { /* <Box scale={scale} /> */}
 
-          </>
-          // [END OPÇÃO 1]
+              <Text style={{
+                color: validation,
+                fontSize: 16,
+                fontWeight: "bold",
+                color: validationColor
+              }}> {validation} </Text>
 
-          :
-
-          // [START OPÇÃO 2]
-          <>
-
-            {(userData.name)
-
-              ?
-              <>
-
-                <Image
-                  style={{ width: 150, height: 150, borderRadius: 150, marginBottom: 15 }}
-                  source={{ uri: userData.avatar_url }}
+              <View style={styles.viewInput}>
+                <TextInput
+                  style={styles.txtInput}
+                  onChangeText={searchUsername}
+                  placeholder="Digite aqui"
+                  clearButtonMode='always'
                 />
+              </View>
 
-                <View style={{
-                  height: 60,
-                  width: 250,
-                  display: "flex",
+              <TouchableOpacity style={styles.btn} onPress={verifyEmpity}>
+                <Text style={styles.txt}>Buscar</Text>
+              </TouchableOpacity>
 
-                  alignItems: "center"
-                }}>
-                  <Text style={styles.txtBlack}> {userData.name} </Text>
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      color: "#444444"
-                    }}
-                  >
-                    Has {userData.followers} followers and follows {userData.following} users
-                    </Text>
-                  <Text style={{
-                    fontSize: 10,
-                    color: "#444444"
-                  }}> {userData.location} </Text>
-                </View>
+            </>
+            // [END BUSCA INICIAL]
 
-                <View style={styles.viewInput}>
-                  <TextInput
-                    style={styles.txtInput}
-                    onChangeText={searchUsername}
-                    placeholder="Digite aqui um usuário"
-                    clearButtonMode="while-editing"
-                  />
-                </View>
+            :
 
-                <TouchableOpacity style={styles.btn} onPress={verifyEmpity}>
-                  <Text style={styles.txt}>Buscar</Text>
-                </TouchableOpacity>
+            // [START RESULTADO DA BUSCA]
+            <>
 
-                <TouchableOpacity style={styles.clearBtn} onPress={clear}>
-                  <Text style={styles.clearTxt}>Clear</Text>
-                </TouchableOpacity>
+              {
 
-              </>
+                // O nome de usuário existe?
+                (userData.name)
 
-              :
+                  ?
 
-              errorInSearch()
+                  // Se existir, suas informações são carregadas
+                  <>
 
-            }
+                    <Image
+                      style={{ width: 150, height: 150, borderRadius: 150, marginBottom: 15 }}
+                      source={{ uri: userData.avatar_url }}
+                    />
 
-          </>
-        // [END OPÇÃO 2]
+                    <View style={{
+                      height: 60,
+                      width: 250,
+                      display: "flex",
 
-      }
-    </View>
+                      alignItems: "center"
+                    }}>
+                      <Text style={styles.txtBlack}> {userData.name} </Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: "#444444"
+                        }}
+                      >
+                        Has {userData.followers} followers and follows {userData.following} users
+                      </Text>
+                      <Text style={{
+                        fontSize: 10,
+                        color: "#444444"
+                      }}> {userData.location} </Text>
+                    </View>
+
+                    <View style={styles.viewInput}>
+                      <TextInput
+                        style={styles.txtInput}
+                        onChangeText={searchUsername}
+                        placeholder="Digite aqui um usuário"
+                      />
+                    </View>
+
+                    <TouchableOpacity style={styles.btn} onPress={verifyEmpity}>
+                      <Text style={styles.txt}>Buscar</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.clearBtn} onPress={clear}>
+                      <Text style={styles.clearTxt}>Clear</Text>
+                    </TouchableOpacity>
+
+                  </>
+
+                  :
+
+                  // Usuário não encontrado
+                  errorInSearch()
+
+              }
+
+            </>
+          // [END RESULTADO DA BUSCA]
+
+        }
+      </View>
+
+    </>
   );
 }
 
@@ -243,7 +261,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
-
     elevation: 4,
   },
   btn: {
