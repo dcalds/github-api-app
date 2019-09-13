@@ -6,26 +6,30 @@ import {
 
 export default function Profile({ navigation }) {
 
-    const [savedUsers, setSavedUsers] = useState(["Danilo Caldas", "Danilo Caldas","Danilo Caldas","Danilo Caldas","Danilo Caldas","Danilo Caldas","Danilo Caldas","Danilo Caldas","Danilo Caldas"])
+    const savedUsers = navigation.getParam('savedUsers');
+
+    // const [savedUsers, setSavedUsers] = useState([])
 
     return (
         <ScrollView style={styles.container}>
+
             <View style={styles.cardContainer}>
 
-                {
-                    savedUsers.map( (element, index) => {
-                            return (<TouchableOpacity style={styles.card} key={index}>
-                                        <Image
-                                            style={{height: 40, width: 40, borderRadius: 50}}
-                                            source={{ uri: "https://avatars3.githubusercontent.com/u/31120411?s=460&v=4" }}
-                                        />
-                                        <Text style={{fontSize: 20, fontWeight: "bold", marginLeft: 20}}>
-                                            {element}
-                                        </Text>
-                                    </TouchableOpacity>)
-                        } 
-                    )
-                }
+            {
+                savedUsers.map( (element, index) => {
+                    return (<TouchableOpacity style={styles.card} key={index}>
+
+                        <View
+                            style={{ height: 40, width: 40, borderRadius: 50, backgroundColor: "tomato" }}
+                        />
+
+                        <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20 }}>
+                            {element}
+                        </Text>
+
+                    </TouchableOpacity>)
+                })
+            }
 
             </View>
         </ScrollView>

@@ -1,8 +1,0 @@
-<Image 
-	style={{width: 150, height: 150, borderRadius: 150, marginBottom: 15}}
-	source={{uri: user.picture.large}}
-/>
-          
-<Text style={styles.texto}> Nome: {user.name.first + " " + user.name.last} </Text>            
-<Text style={styles.texto}> Local: {user.location.state} </Text>
-<Text style={styles.texto}> Email: {user.email} </Text>

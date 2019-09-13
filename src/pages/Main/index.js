@@ -11,6 +11,7 @@ export default function Main({ navigation }) {
   const [loading, setLoading] = useState(false) // false = inicio // true = mostra user ou erro
   const [validation, setValidation] = useState("Pesquise usuários do GitHub")
   const [validationColor, setValidationColor] = useState("black")
+  const [savedUsers, setSavedUsers] = useState([])
 
   // [START ANIMATION]
   // const Box = ({ scale = 1 }) => (
@@ -105,13 +106,18 @@ export default function Main({ navigation }) {
     setUserData(null)
   }
 
+  // SALVA USUÁRIO
+  function saveUserData() {
+    setSavedUsers([...savedUsers, username])
+  }
+
   return (
 
     <>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile', { savedUsers })}>
         <Image
-          style={{ width: 35, height: 35, marginTop: 5, marginLeft: 5 }}
+          style={{ width: 28, height: 28, marginTop: 15, marginLeft: 15 }}
           source={require('../../assets/gear.png')}
         />
       </TouchableOpacity>
@@ -160,7 +166,7 @@ export default function Main({ navigation }) {
               {
 
                 // O nome de usuário existe?
-                (userData.name)
+                (userData.login)
 
                   ?
 
@@ -206,9 +212,25 @@ export default function Main({ navigation }) {
                       <Text style={styles.txt}>Buscar</Text>
                     </TouchableOpacity>
 
+                    <TouchableOpacity style={styles.saveBtn} onPress={saveUserData}>
+                      <Text style={styles.saveTxt}>Salvar Usuário</Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={styles.clearBtn} onPress={clear}>
                       <Text style={styles.clearTxt}>Clear</Text>
                     </TouchableOpacity>
+
+                    {
+                      savedUsers != []
+
+                      ?
+
+                      savedUsers.map((element, index) => { return <Text key={index}> {element} </Text> })
+
+                      :
+
+                      <Text>Não tem nada aqui</Text>
+                    }
 
                   </>
 
@@ -288,5 +310,21 @@ const styles = StyleSheet.create({
   clearTxt: {
     fontSize: 16,
     color: "tomato"
+  },
+  saveBtn: {
+    height: 50,
+    width: 250,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderStyle: "solid",
+    borderColor: "green",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 5,
+  },
+  saveTxt: {
+    fontSize: 16,
+    color: "green"
   }
 });
