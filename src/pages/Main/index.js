@@ -8,7 +8,7 @@ export default function Main({ navigation }) {
 
   const [username, setUsername] = useState(null)
   const [userData, setUserData] = useState(null)
-  const [loading, setLoading] = useState(false) // false = inicio // true = mostra user ou erro
+  const [loaded, setLoaded] = useState(false) // false = inicio // true = mostra user ou erro
   const [validation, setValidation] = useState("Pesquise usuários do GitHub")
   const [validationColor, setValidationColor] = useState("black")
   const [savedUsers, setSavedUsers] = useState([])
@@ -52,14 +52,6 @@ export default function Main({ navigation }) {
   // const scale = usePulse();
   // [END ANIMATION]
 
-  // async function loadRandomUser() {
-  //  const url = 'https://api.randomuser.me/';
-  //  const response = await fetch(url);
-  //  const data = await response.json();
-  //  setUserData(data.results[0])
-  //  setLoading(true)
-  // }  
-
   // MUDA O HOOK DE NOME DE USUÁRIO EM TEMPO REAL
   function searchUsername(newUser) {
     setUsername(newUser)
@@ -85,7 +77,7 @@ export default function Main({ navigation }) {
   function errorInSearch() {
     setValidation("Usuário Inválido")
     setValidationColor("tomato")
-    setLoading(false)
+    setLoaded(false)
   }
 
   // FUNÇÃO ASSÍNCRONA PARA REQUISITAR API DO GITHUB
@@ -94,21 +86,21 @@ export default function Main({ navigation }) {
     const response = await fetch(url);
     const data = await response.json();
     setUserData(data)
-    setLoading(true)
+    setLoaded(true)
   }
 
   // LIMPA E RESETA OS HOOKS PARA O ESTADO INICIAL
   function clear() {
-    setLoading(false)
     setValidation("Pesquise outro usuário")
     setValidationColor("black")
     setUsername(null)
     setUserData(null)
+    setLoaded(false)
   }
 
   // SALVA USUÁRIO
   function saveUserData() {
-    setSavedUsers([...savedUsers, username])
+    setSavedUsers([...savedUsers, [userData.name, userData.avatar_url]])
   }
 
   return (
@@ -127,7 +119,7 @@ export default function Main({ navigation }) {
         {
 
           // CASO O O CARREGAMENTO SEJA TROCADO PARA FALSO, IRÁ RENDERIZAR A TELA DE USUÁRIO
-          (loading === false)
+          (loaded === false)
 
             ?
 
@@ -220,17 +212,17 @@ export default function Main({ navigation }) {
                       <Text style={styles.clearTxt}>Clear</Text>
                     </TouchableOpacity>
 
-                    {
+                    {/* {
                       savedUsers != []
 
                       ?
 
-                      savedUsers.map((element, index) => { return <Text key={index}> {element} </Text> })
+                      savedUsers.map((element, index) => { return <Text key={index}> {element[0]} : {element[1]} </Text> })
 
                       :
 
                       <Text>Não tem nada aqui</Text>
-                    }
+                    } */}
 
                   </>
 

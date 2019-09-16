@@ -1,6 +1,6 @@
 # GitHub Api Research
 
-- Aplicativo desenvolvido em React Native, utilizando boas práticas, para consulta de dados fornecidos pela api do GitHub.
+Aplicativo feito em React Native para consulta de dados fornecidos pela api do GitHub.
 
 > Futura implementação para REST
 
@@ -10,6 +10,10 @@
 
 2. Use Hooks Apenas Dentro de Funções do React
 
-<img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/Screenshot_1.png" alt="Image" width="210" text-center>
-<img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/Screenshot_2.png" alt="Image" width="210" text-center>
-<img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/Screenshot_3.png" alt="Image" width="210" text-center>
+Versão 0.1
+
+<img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/src.jpeg" alt="Image" width="900" text-center>
+
+Versão 0.2
+
+<img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/src2.jpeg" alt="Image" width="900" text-center>

@@ -19,12 +19,13 @@ export default function Profile({ navigation }) {
                 savedUsers.map( (element, index) => {
                     return (<TouchableOpacity style={styles.card} key={index}>
 
-                        <View
-                            style={{ height: 40, width: 40, borderRadius: 50, backgroundColor: "tomato" }}
+                        <Image
+                            style={{ height: 40, width: 40, borderRadius: 50, backgroundColor: "tomato", marginLeft: 20, marginTop: 8 }}
+                            source={{uri: `${element[1]}`}}
                         />
 
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20 }}>
-                            {element}
+                        <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20 , marginTop: 13}}>
+                            {element[0]}
                         </Text>
 
                     </TouchableOpacity>)
@@ -53,8 +54,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         marginBottom: 10,
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center"
+        flexDirection: "row"
+
     }
 });
